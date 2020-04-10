@@ -1,4 +1,4 @@
-// getRandomArbitrary Retorna un número aleatorio entre min (incluido) y max (excluido)
+ // getRandomArbitrary Retorna un número aleatorio entre min (incluido) y max (excluido)
 // Match.floor Devuelve el máximo entero menor o igual a un número
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -14,6 +14,14 @@ function getRandomArbitrary(min, max) {
   // asegurandose que dicha carta no habia sido previamente repartida.
 
   // La funcion no devuelve nada, hace el cambio sobre el modelo pasado como parámetro.
+  class Carta {
+    constructor(palo, numero, repartidaA, aLaVista){
+      this.palo = palo;
+      this.numero = numero;
+      this.repartidaA = repartidaA;
+      this.aLaVista = aLaVista;
+    }
+  }
 
 function repartirUnaCarta(modeloBaraja, modeloJugadores, jugador, indiceCarta) {
   
@@ -26,7 +34,7 @@ function repartirUnaCarta(modeloBaraja, modeloJugadores, jugador, indiceCarta) {
   } while (modeloBaraja[aleatorioPalo][aleatorioNumero].repartidaA !== -1);
 
   modeloBaraja[aleatorioPalo][aleatorioNumero].repartidaA = jugador;
-  modeloJugadores[jugador][indiceCarta] = {palo: aleatorioPalo, numero: aleatorioNumero};
+  modeloJugadores[jugador][indiceCarta] = modeloBaraja[aleatorioPalo][aleatorioNumero];
 }
 
 function repartirManoAJugador(numeroCartasPorMano, modeloBaraja, modeloJugadores, jugador) {
@@ -43,7 +51,7 @@ function inicializarModeloBaraja(palos, numCartasPorPalo) {
   for (let i = 0; i < palos; i++) {
     modelo[i] = new Array(numCartasPorPalo);
     for (let j = 0; j < numCartasPorPalo; j++) {
-      modelo[i][j] = { repartidaA: -1, aLaVista: false };
+      modelo[i][j] = new Carta(i, j, -1, false);
     }
   }
   return modelo;
