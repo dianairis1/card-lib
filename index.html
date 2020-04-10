@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Card Game</title>
+  </head>
+  <body>
+    <button onclick="repartirManoClickHandler()">Repartir mano</button>
+    <div id="modelo"></div>
+    <script src="index.js"></script>
+    
+    <script>
+      // 0 treboles, 1 corazones, 2 picas, 3 rombos
+      const PALOS = 4;
+      // 13 cartas por palo [A,2,3,4,5,6,7,8,9,J,Q,K]
+      const NUM_CARTAS_POR_PALO = 13;
+      const JUGADORES = 3;
+      const CARTAS_POR_JUGADOR = 5;
+
+      function pintarModeloBaraja(modelo) {
+        let html = "";
+        // Recorre los palos
+        for (let i = 0; i < modelo.length; i++) {
+          for (let j = 0; j < modelo[i].length; j++) {
+            if (modelo[i][j].repartidaA > -1) {
+              html = html + `<img src="./playing-cards-png/${i}-${j + 1}.png">`;
+            }
+          }
+        }
+        document.getElementById("modelo").innerHTML = html;
+      }
+
+      function pintarModeloJugadores(modelo) {
+        html = "";
+        for (let i = 0; i < modelo.length; i++) {
+          html = html + `<h1> Jugador: ${i} </h1>`;
+          for (let j = 0; j < modelo[i].length; j++) {
+            html =
+              html +
+              `<img src="./playing-cards-png/${modelo[i][j].palo}-${modelo[i][j]
+                .numero + 1}.png">`;
+          }
+        }
+
+        document.getElementById("modelo").innerHTML = html;
+      }
+
+      function repartirManoClickHandler() {
+        for (let i = 0; i < JUGADORES; i++) {
+          repartirManoAJugador(
+            CARTAS_POR_JUGADOR,
+            modeloBaraja,
+            modeloJugadores,
+            i
+          );
+        }
+        //pintarModeloBaraja(modeloBaraja);
+        pintarModeloJugadores(modeloJugadores);
+      }
+
+      const modeloBaraja = inicializarModeloBaraja(PALOS, NUM_CARTAS_POR_PALO);
+      const modeloJugadores = inicializarModeloJugadores(
+        JUGADORES,
+        CARTAS_POR_JUGADOR
+      );
+    </script>
+    
+  </body>
+</html>
